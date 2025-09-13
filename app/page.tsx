@@ -31,7 +31,7 @@ const channelData: Record<string, Message[]> = {
       avatar: '🤖',
       username: 'QuackBot',
       timestamp: 'Pinned',
-      content: '<strong>📎 Resume Download</strong><br/><a href="https://drive.google.com/file/d/1WrMrV3qu9RsF29Zt7b9sk570pve0tzAw/view?usp=drivesdk" class="text-blue-400 hover:underline" target="_blank">View Neel_Phadke_Resume.pdf</a>',
+      content: '<strong>📎 Resume Download</strong><br/><a href="https://drive.google.com/file/d/1q2YtmAwhQIrjVh5OebVIFZvgAf5QHqkW/view?usp=drivesdk" class="text-blue-400 hover:underline" target="_blank">View Neel_Phadke_Resume.pdf</a>',
       isPinned: true
     },
     {
@@ -256,7 +256,7 @@ function HomeContent() {
         avatar: '🤖',
         username: 'QuackBot',
         timestamp: 'Just now',
-        content: `📎 <strong>Resume Download</strong><br/><a href="https://drive.google.com/file/d/1WrMrV3qu9RsF29Zt7b9sk570pve0tzAw/view?usp=drivesdk" class="text-blue-400 hover:underline" target="_blank">View Neel_Phadke_Resume.pdf</a>`
+        content: `📎 <strong>Resume Download</strong><br/><a href="https://drive.google.com/file/d/1q2YtmAwhQIrjVh5OebVIFZvgAf5QHqkW/view?usp=drivesdk" class="text-blue-400 hover:underline" target="_blank">View Neel_Phadke_Resume.pdf</a>`
       }
       setMessages(prev => [...prev, resumeMessage])
     } else if (cmd === '!quack') {
