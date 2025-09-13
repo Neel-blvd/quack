@@ -16,7 +16,8 @@ export default function DuckPond() {
     duck: { x: 50, y: 140, width: 40, height: 40, velocityY: 0, jumping: false },
     obstacles: [] as Array<{ x: number; y: number; width: number; height: number }>,
     gameSpeed: 3,
-    score: 0
+    score: 0,
+    lastObstacleX: -200
   })
 
   useEffect(() => {
@@ -36,7 +37,8 @@ export default function DuckPond() {
       duck: { x: 50, y: 140, width: 40, height: 40, velocityY: 0, jumping: false },
       obstacles: [],
       gameSpeed: 3,
-      score: 0
+      score: 0,
+      lastObstacleX: -200
     }
     setScore(0)
     setGameOver(false)
@@ -114,12 +116,13 @@ export default function DuckPond() {
         return obstacle.x > -obstacle.width
       })
       
-      // Add new obstacles
-      if (Math.random() < 0.01) {
+      // Add new obstacles with minimum distance
+      const rightmostObstacle = game.obstacles.length > 0 ? Math.max(...game.obstacles.map(o => o.x)) : -200
+      if (Math.random() < 0.015 && canvas.width - rightmostObstacle > 80) {
         game.obstacles.push({
           x: canvas.width,
           y: 160,
-          width: 20,
+          width: 12,
           height: 40
         })
       }
@@ -188,7 +191,7 @@ export default function DuckPond() {
             ref={canvasRef}
             width={650}
             height={220}
-            className="w-full max-h-full border-2 border-blue-600 rounded bg-sky-200"
+            className="w-full min-h-[300px] md:max-h-full border-2 border-blue-600 rounded bg-sky-200"
             onClick={() => {
               if (!gameRunning && !gameOver) {
                 startGame()

@@ -10,6 +10,7 @@ interface SidebarProps {
   showDuckJoke: boolean
   showQuackBotDM: boolean
   dmViewed: boolean
+  unreadDMCount: number
 }
 
 const channels = [
@@ -21,7 +22,7 @@ const channels = [
   { id: 'contact', name: 'contact' },
 ]
 
-export default function Sidebar({ activeChannel, onChannelSelect, showDuckPond, showDuckJoke, showQuackBotDM, dmViewed }: SidebarProps) {
+export default function Sidebar({ activeChannel, onChannelSelect, showDuckPond, showDuckJoke, showQuackBotDM, dmViewed, unreadDMCount }: SidebarProps) {
   const [showPreferences, setShowPreferences] = useState(false)
 
   return (
@@ -141,9 +142,9 @@ export default function Sidebar({ activeChannel, onChannelSelect, showDuckPond, 
             >
               <span className="text-xs">🤖</span>
               <span>QuackBot</span>
-              {!dmViewed && (
+              {!dmViewed && unreadDMCount > 0 && (
                 <span className="ml-auto bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full min-w-[18px] h-[18px] flex items-center justify-center font-medium">
-                  1
+                  {unreadDMCount}
                 </span>
               )}
             </button>

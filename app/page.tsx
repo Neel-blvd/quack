@@ -110,7 +110,7 @@ const channelData: Record<string, Message[]> = {
       avatar: '/myphoto.jpg',
       username: 'Neel Phadke',
       timestamp: 'Today at 11:30 AM',
-      content: '<img src="/amazon-logo2.jpg" alt="Amazon" style="height: 24px; display: block; margin-bottom: 8px;"><strong>Amazon</strong> - System Development Engineer Intern<br/><em>July 2025 – Dec 2025</em><br/><br/>🔧 Worked on <strong>Access Key Rotation</strong> for an AWS IAM user.<br/>☕ Migrated an internal service to the <strong>latest JDK LTS version</strong>.'
+      content: '<img src="/amazon-logo2.jpg" alt="Amazon" style="height: 24px; display: block; margin-bottom: 8px;"><strong>Amazon</strong> - System Development Engineer Intern<br/><em>July 2025 – Dec 2025 (Ongoing)</em><br/><br/>🔧 Worked on <strong>Access Key Rotation</strong> for an AWS IAM user.<br/>☕ Migrated an internal service to the <strong>latest JDK LTS version</strong>.'
     }
   ],
   'achievements': [
@@ -145,6 +145,7 @@ function HomeContent() {
   const [showQuackBotDM, setShowQuackBotDM] = useState(false)
   const [dmViewed, setDmViewed] = useState(false)
   const [showNotification, setShowNotification] = useState(false)
+  const [unreadDMCount, setUnreadDMCount] = useState(0)
   const { preferences } = require('@/contexts/PreferencesContext').usePreferences()
   const loadTime = new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
 
@@ -164,6 +165,7 @@ function HomeContent() {
     setTimeout(() => {
       setShowQuackBotDM(true)
       setShowNotification(true)
+      setUnreadDMCount(2) // 2 messages from QuackBot
       // Hide notification after 10 more seconds
       setTimeout(() => {
         setShowNotification(false)
@@ -177,14 +179,24 @@ function HomeContent() {
     if (channel === 'quackbot-dm') {
       setDmViewed(true)
       setShowNotification(false)
-      const dmMessage: Message = {
-        id: 'dm-1',
-        avatar: '🤖',
-        username: 'QuackBot',
-        timestamp: `Today at ${loadTime}`,
-        content: 'Hope you\'re enjoying my portfolio!'
-      }
-      setMessages([dmMessage])
+      setUnreadDMCount(0)
+      const dmMessages: Message[] = [
+        {
+          id: 'dm-1',
+          avatar: '🤖',
+          username: 'QuackBot',
+          timestamp: `Today at ${loadTime}`,
+          content: 'Hope you\'re enjoying my portfolio!'
+        },
+        {
+          id: 'dm-2',
+          avatar: '🤖',
+          username: 'QuackBot',
+          timestamp: `Today at ${loadTime}`,
+          content: 'Feel free to reach out if you have any suggestions for improvements/fixes. Would greatly appreciate it!'
+        }
+      ]
+      setMessages(dmMessages)
       return
     }
     
@@ -284,7 +296,7 @@ function HomeContent() {
         <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-blue-600 text-white px-4 py-2 text-sm flex items-center justify-between rounded shadow-lg z-50">
           <div className="flex items-center gap-2">
             <span>🤖</span>
-            <span><strong>QuackBot</strong> sent you a message</span>
+            <span><strong>QuackBot</strong> sent you {unreadDMCount} message{unreadDMCount > 1 ? 's' : ''}</span>
           </div>
           <button 
             onClick={() => handleChannelSelect('quackbot-dm')}
@@ -309,6 +321,7 @@ function HomeContent() {
             showDuckJoke={showDuckJoke}
             showQuackBotDM={showQuackBotDM}
             dmViewed={dmViewed}
+            unreadDMCount={unreadDMCount}
           />
         </div>
         
@@ -326,6 +339,7 @@ function HomeContent() {
                 showDuckJoke={showDuckJoke}
                 showQuackBotDM={showQuackBotDM}
                 dmViewed={dmViewed}
+                unreadDMCount={unreadDMCount}
               />
             </div>
             <div 
